@@ -130,10 +130,10 @@ const App: React.FC = () => {
       </div>
 
       {/* Mobile Header with LOGO */}
-      <header className="sticky top-0 z-30 bg-radio-950/90 backdrop-blur-md border-b border-white/5 px-5 py-3 flex items-center justify-between shadow-lg">
+      <header className="sticky top-0 z-30 bg-radio-950/90 backdrop-blur-md border-b border-white/5 px-5 py-4 flex items-center justify-between shadow-lg">
         <div className="flex items-center">
-          {/* LOGO IMAGE - Large Size */}
-          <div className="h-20 w-auto relative group">
+          {/* LOGO IMAGE - Large Size - Increased from h-20 to h-28 */}
+          <div className="h-28 w-auto relative group">
              {/* Orange glow behind logo */}
              <div className="absolute inset-0 bg-radio-accent blur-xl opacity-15 group-hover:opacity-25 transition-opacity rounded-full"></div>
              <img 
@@ -173,7 +173,7 @@ const App: React.FC = () => {
            </div>
            <div className="grid grid-cols-2 gap-3">
              <QuickActionButton icon={Globe} label="Portal 520" href="https://www.radio520.com.br" />
-             <QuickActionButton icon={Mic} label="Podcast" href="https://www.instagram.com/channel/AbZotNEFR9O1X6V1/?igsh=OGRtanJybzVvaGgz" />
+             <QuickActionButton icon={Mic} label="Podcast" href="https://radio520.com.br/share/match-report-premier-league-numbers-25-26.html" />
            </div>
         </section>
 
