@@ -182,7 +182,7 @@ const App: React.FC = () => {
           <div className="flex items-center gap-2 mb-4 px-1">
              <div className="h-4 w-1 bg-radio-accent rounded-full"></div>
              <h2 className="text-white text-sm font-bold uppercase tracking-widest">
-               Destaques da Programação
+               VAI ROLAR POR AQUI
              </h2>
           </div>
           
