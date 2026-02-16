@@ -7,6 +7,23 @@ import CurrentShowPlayer from './components/CurrentShowPlayer';
 import FeaturedProgram from './components/FeaturedProgram';
 import { Wifi, Radio, MessageCircle, Instagram, Globe, Mic, ExternalLink } from 'lucide-react';
 
+const QuickActionButton = ({ icon: Icon, label, href }: { icon: any, label: string, href: string }) => (
+  <a 
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group relative flex items-center justify-between p-4 rounded-2xl bg-radio-800/60 border border-white/5 hover:bg-radio-800 transition-all duration-300 active:scale-95 shadow-md"
+  >
+    <div className="flex items-center gap-3">
+      <div className="p-2.5 rounded-full bg-radio-900 text-radio-accent border border-white/5 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(255,102,0,0.15)]">
+        <Icon className="h-5 w-5" />
+      </div>
+      <span className="font-bold text-sm text-white tracking-wide">{label}</span>
+    </div>
+    <ExternalLink className="h-3 w-3 text-gray-600 group-hover:text-radio-accent transition-colors" />
+  </a>
+);
+
 const App: React.FC = () => {
   // State
   const [playerState, setPlayerState] = useState<PlayerState>({
@@ -101,23 +118,6 @@ const App: React.FC = () => {
     }
   }, [playerState.isPlaying, playerState.currentStation]);
 
-  const QuickActionButton = ({ icon: Icon, label, href }: { icon: any, label: string, href: string }) => (
-    <a 
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative flex items-center justify-between p-4 rounded-2xl bg-radio-800/60 border border-white/5 hover:bg-radio-800 transition-all duration-300 active:scale-95 shadow-md"
-    >
-      <div className="flex items-center gap-3">
-        <div className="p-2.5 rounded-full bg-radio-900 text-radio-accent border border-white/5 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(255,102,0,0.15)]">
-          <Icon className="h-5 w-5" />
-        </div>
-        <span className="font-bold text-sm text-white tracking-wide">{label}</span>
-      </div>
-      <ExternalLink className="h-3 w-3 text-gray-600 group-hover:text-radio-accent transition-colors" />
-    </a>
-  );
-
   return (
     // Mobile Container Constraint - DARK BLUE THEME
     <div className="max-w-md mx-auto min-h-screen bg-radio-950 relative shadow-2xl flex flex-col font-sans text-white">
@@ -168,7 +168,7 @@ const App: React.FC = () => {
         {/* Action Buttons Grid */}
         <section className="grid grid-cols-1 gap-3 mb-8">
            <div className="grid grid-cols-2 gap-3">
-             <QuickActionButton icon={MessageCircle} label="WhatsApp" href="#" />
+             <QuickActionButton icon={MessageCircle} label="WhatsApp" href="https://wa.me/5511988277967" />
              <QuickActionButton icon={Instagram} label="Instagram" href="https://www.instagram.com/channel/AbZotNEFR9O1X6V1/?igsh=OGRtanJybzVvaGgz" />
            </div>
            <div className="grid grid-cols-2 gap-3">
