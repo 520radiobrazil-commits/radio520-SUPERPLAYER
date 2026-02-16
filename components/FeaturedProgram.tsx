@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Calendar, Clock, Music, Star } from 'lucide-react';
+import { Calendar, Clock, Radio, Sparkles, ArrowRight } from 'lucide-react';
 import { PROGRAMMING_SCHEDULE } from '../constants';
 import { ProgramSlot } from '../types';
 
@@ -29,6 +29,16 @@ const SLOGANS: Record<string, string> = {
   "HORA DA AVE MARIA": "Um momento de fé e reflexão."
 };
 
+const DAYS_MAP = [
+  "DOMINGO",
+  "SEGUNDA-FEIRA",
+  "TERÇA-FEIRA",
+  "QUARTA-FEIRA",
+  "QUINTA-FEIRA",
+  "SEXTA-FEIRA",
+  "SÁBADO"
+];
+
 const FeaturedProgram: React.FC = () => {
   // Memoize the random selection so it doesn't change on every re-render
   const randomProgram = useMemo(() => {
@@ -38,7 +48,7 @@ const FeaturedProgram: React.FC = () => {
     Object.entries(PROGRAMMING_SCHEDULE).forEach(([dayStr, slots]) => {
       const day = parseInt(dayStr);
       slots.forEach(slot => {
-        // Filter out very short segments if desired, or keep all
+        // Filter out very short segments to focus on main shows
         if (slot.name !== "REPÓRTER 520" && slot.name !== "REPÓRTER520") {
              allSlots.push({ day, slot });
         }
@@ -54,55 +64,73 @@ const FeaturedProgram: React.FC = () => {
 
   if (!randomProgram) return null;
 
-  const { slot } = randomProgram;
+  const { day, slot } = randomProgram;
   const slogan = SLOGANS[slot.name] || "A melhor programação do rádio web.";
-  
-  // Helper to format day name if needed, though simple time is often cleaner
-  // For this design, we focus on the time range.
+  const dayName = DAYS_MAP[day];
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-radio-900 via-radio-800 to-black border border-white/10 shadow-lg group">
+    <div className="relative w-full rounded-3xl overflow-hidden bg-radio-900 border border-white/10 shadow-2xl group transition-all duration-300 hover:shadow-orange-500/10 hover:border-radio-accent/30">
       
-      {/* Decorative Background Elements */}
-      <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-radio-accent/20 rounded-full blur-2xl group-hover:bg-radio-accent/30 transition-colors duration-500"></div>
-      <div className="absolute bottom-0 left-0 -mb-4 -ml-4 w-32 h-32 bg-blue-900/20 rounded-full blur-3xl"></div>
-
-      <div className="relative p-5 flex flex-col gap-3">
+      {/* Background Ambience */}
+      <div className="absolute inset-0 bg-gradient-to-br from-radio-800/50 to-black pointer-events-none"></div>
+      <div className="absolute -top-10 -right-10 w-40 h-40 bg-radio-accent/10 rounded-full blur-[50px] group-hover:bg-radio-accent/20 transition-all"></div>
+      
+      <div className="relative p-5 flex flex-col gap-4">
         
-        {/* Header */}
-        <div className="flex justify-between items-start">
-          <div className="flex items-center gap-2 bg-white/5 px-2 py-1 rounded-lg border border-white/5">
-            <Star className="h-3 w-3 text-yellow-400 fill-current" />
-            <span className="text-[10px] font-bold uppercase tracking-wider text-gray-300">Destaque da Grade</span>
-          </div>
-          <Music className="h-5 w-5 text-radio-700 group-hover:text-radio-accent transition-colors duration-300" />
+        {/* Header Label */}
+        <div className="flex items-center justify-between">
+           <div className="flex items-center gap-2 bg-radio-950/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+             <Sparkles className="h-3 w-3 text-radio-accent animate-pulse" />
+             <span className="text-[10px] font-black uppercase tracking-widest text-white">Destaque da Grade</span>
+           </div>
+           <Radio className="h-4 w-4 text-gray-600 group-hover:text-radio-accent transition-colors" />
         </div>
 
-        {/* Program Name & Slogan */}
-        <div className="mt-1">
-          <h3 className="text-xl font-black text-white leading-tight uppercase tracking-tight mb-1 group-hover:text-radio-accent transition-colors duration-300">
-            {slot.name}
-          </h3>
-          <p className="text-sm text-blue-200/70 font-medium leading-snug">
-            {slogan}
-          </p>
+        {/* Program Title & Slogan */}
+        <div className="space-y-2">
+           <h3 className="text-2xl font-black text-white leading-none uppercase tracking-tight drop-shadow-lg group-hover:scale-[1.02] transition-transform origin-left">
+             {slot.name}
+           </h3>
+           <p className="text-sm text-blue-200/60 font-medium leading-tight max-w-[90%]">
+             {slogan}
+           </p>
         </div>
 
-        {/* Time Info */}
-        <div className="mt-3 pt-3 border-t border-white/5 flex items-center gap-4">
-          <div className="flex items-center gap-2 text-gray-400">
-            <Clock className="h-4 w-4 text-radio-accent" />
-            <span className="text-xs font-mono font-bold text-white">
-              {slot.start} - {slot.end}
-            </span>
-          </div>
+        {/* Divider */}
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+        {/* Time & Day Grid - VISUALIZAÇÃO MELHORADA */}
+        <div className="grid grid-cols-2 gap-3">
           
-          <div className="flex items-center gap-1.5 text-gray-500">
-            <Calendar className="h-3.5 w-3.5" />
-            <span className="text-[10px] uppercase font-bold tracking-wide">
-              Confira na Programação
-            </span>
+          {/* Day Box */}
+          <div className="bg-radio-950/60 p-3 rounded-2xl border border-white/5 flex flex-col items-start justify-center group-hover:bg-radio-800 transition-colors">
+             <div className="flex items-center gap-1.5 mb-1 text-radio-accent">
+               <Calendar className="h-3.5 w-3.5" />
+               <span className="text-[10px] font-bold uppercase tracking-wider">Dia</span>
+             </div>
+             <span className="text-sm font-bold text-white uppercase tracking-tight truncate w-full">
+               {dayName}
+             </span>
           </div>
+
+          {/* Time Box */}
+          <div className="bg-radio-950/60 p-3 rounded-2xl border border-white/5 flex flex-col items-start justify-center group-hover:bg-radio-800 transition-colors">
+             <div className="flex items-center gap-1.5 mb-1 text-radio-accent">
+               <Clock className="h-3.5 w-3.5" />
+               <span className="text-[10px] font-bold uppercase tracking-wider">Horário</span>
+             </div>
+             <span className="text-sm font-bold text-white font-mono tracking-tight">
+               {slot.start} às {slot.end}
+             </span>
+          </div>
+
+        </div>
+
+        {/* CTA Hint */}
+        <div className="flex justify-end mt-1">
+           <span className="text-[10px] text-gray-500 flex items-center gap-1 group-hover:text-radio-accent transition-colors">
+             Não perca <ArrowRight className="h-3 w-3" />
+           </span>
         </div>
 
       </div>
